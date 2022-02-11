@@ -24,10 +24,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findStudent(Long id) {
-        if (!studentRepository.existsById(id)) {
-            throw new StudentNotFoundException();
-        }
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
 
     }
 
@@ -40,10 +37,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentsByAge(Long age) {
-        return studentRepository.findAll().stream()
-                .filter(s->s.getAge()==age)
-                .collect(Collectors.toList());
+    public Collection<Student> getStudentsByAge(int age) {
+        return studentRepository.findStudentByAge(age);
     }
 
     @Override

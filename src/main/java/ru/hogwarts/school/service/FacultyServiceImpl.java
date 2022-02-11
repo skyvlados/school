@@ -24,10 +24,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Faculty findFaculty(Long id) {
-        if (!facultyRepository.existsById(id)) {
-            throw new StudentNotFoundException();
-        }
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow(StudentNotFoundException::new);
     }
 
     @Override
@@ -48,8 +45,6 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Collection<Faculty> getFacultiesByColor(String color) {
-        return facultyRepository.findAll().stream()
-                .filter(f-> Objects.equals(f.getColor(), color))
-                .collect(Collectors.toList());
+        return facultyRepository.findFacultiesByColor(color);
     }
 }
