@@ -48,9 +48,7 @@ public class StudentServiceImpl implements StudentService {
         if (!studentMap.containsKey(id)) {
             throw new StudentNotFoundException();
         }
-        Student studentToRemove = studentMap.get(id);
-        studentMap.remove(id);
-        return studentToRemove;
+        return studentMap.remove(id);
     }
 
 

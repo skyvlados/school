@@ -42,9 +42,7 @@ public class FacultyServiceImpl implements FacultyService{
         if (!facultyMap.containsKey(id)) {
             throw new StudentNotFoundException();
         }
-        Faculty removeFaculty = facultyMap.get(id);
-        facultyMap.remove(id);
-        return removeFaculty;
+        return facultyMap.remove(id);
     }
 
     @Override
