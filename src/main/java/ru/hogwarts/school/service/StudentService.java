@@ -7,6 +7,9 @@ public interface StudentService {
     Student createStudent(Student student);
     void removeStudent(Long id);
     Student findStudent(Long id);
-    Student editStudent(Long id,Student student);
+    Collection<Student> findAllStudent();
+    Student editStudent(Long id, Student student);
     Collection<Student> getStudentsByAge(Long age);
+    Collection<Student> findStudentName(String name);
+    Collection<Student> findByNamePart(String name);
 }

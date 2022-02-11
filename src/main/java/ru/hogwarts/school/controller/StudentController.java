@@ -16,9 +16,20 @@ public class StudentController {
         this.studentServiceImpl = studentServiceImpl;
     }
 
+//    @GetMapping()
+//    public Student getStudent(@RequestParam Long id) {
+//        return studentServiceImpl.findStudent(id);
+//    }
+
     @GetMapping()
-    public Student getStudent(@RequestParam Long id) {
-        return studentServiceImpl.findStudent(id);
+    public Collection<Student> findStudent(@RequestParam(required = false) String name, @RequestParam(required = false) String namePart) {
+        if (name != null && !name.isBlank()) {
+            return studentServiceImpl.findStudentName(name);
+        }
+        if (namePart != null && !namePart.isBlank()) {
+            return studentServiceImpl.findByNamePart(name);
+        }
+        return studentServiceImpl.findAllStudent();
     }
 
     @PostMapping

@@ -32,6 +32,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Collection<Student> findAllStudent() {
+        return studentRepository.findAll();
+    }
+
+    @Override
     public Student editStudent(Long id,Student student) {
         if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException();
@@ -54,6 +59,14 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
+    @Override
+    public Collection<Student> findStudentName(String name) {
+        return studentRepository.findStudentsByName(name);
+    }
 
+    @Override
+    public Collection<Student> findByNamePart(String name) {
+        return studentRepository.findStudentsByNameContains(name);
+    }
 
 }
