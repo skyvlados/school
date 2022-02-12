@@ -28,7 +28,7 @@ public class StudentController {
 
     @PutMapping
     public Student editStudent(@RequestBody Student student) {
-        return studentService.editStudent(student.getId(),student);
+        return studentService.editStudent(student.getId(), student);
     }
 
     @DeleteMapping("{id}")
@@ -40,5 +40,15 @@ public class StudentController {
     @GetMapping("{age}")
     public Collection<Student> showStudentsByAge(@PathVariable int age) {
         return studentService.getStudentsByAge(age);
+    }
+
+    @GetMapping("{name}")
+    public Collection<Student> showStudentsByContainsName(@PathVariable String name) {
+        return studentService.findByNamePart(name);
+    }
+
+    @GetMapping("{ageBetween}")
+    public Collection<Student> showStudentsByAgeBetween(@PathVariable int age1,@PathVariable int age2) {
+        return studentService.findStudentByAgeBetween(age1,age2);
     }
 }

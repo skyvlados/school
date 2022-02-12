@@ -38,7 +38,7 @@ public class FacultyController {
     }
 
     @GetMapping("{color}")
-    public Collection<Faculty> showStudentsByAge(@PathVariable String color) {
+    public Collection<Faculty> showFacultyByColor(@PathVariable String color) {
         return facultyService.getFacultiesByColor(color);
     }
 
