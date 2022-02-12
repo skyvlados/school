@@ -27,13 +27,14 @@ public class FacultyController {
     }
 
     @PutMapping
-    public Faculty editStudent(@RequestBody Faculty faculty) {
+    public Faculty editFaculty(@RequestBody Faculty faculty) {
         return facultyService.editFaculty(faculty.getId(),faculty);
     }
 
     @DeleteMapping("{id}")
-    public Faculty removeStudent(@PathVariable Long id) {
-        return facultyService.removeFaculty(id);
+    public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
+        facultyService.removeFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{color}")

@@ -19,20 +19,6 @@ public class StudentController {
     @GetMapping
     public Student getStudent(@RequestParam Long id) {
         return studentService.findStudent(id);
-//    @GetMapping()
-//    public Student getStudent(@RequestParam Long id) {
-//        return studentServiceImpl.findStudent(id);
-//    }
-
-    @GetMapping()
-    public Collection<Student> findStudent(@RequestParam(required = false) String name, @RequestParam(required = false) String namePart) {
-        if (name != null && !name.isBlank()) {
-            return studentServiceImpl.findStudentName(name);
-        }
-        if (namePart != null && !namePart.isBlank()) {
-            return studentServiceImpl.findByNamePart(name);
-        }
-        return studentServiceImpl.findAllStudent();
     }
 
     @PostMapping
@@ -46,15 +32,13 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable Long id) {
-        return studentService.removeStudent(id);
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
-        studentServiceImpl.removeStudent(id);
+        studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("{age}")
-    public Collection<Student> showStudentsByAge(@PathVariable Long age) {
+    public Collection<Student> showStudentsByAge(@PathVariable int age) {
         return studentService.getStudentsByAge(age);
     }
 }
