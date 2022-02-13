@@ -27,11 +27,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> findAllStudent() {
-        return studentRepository.findAll();
-    }
-
-    @Override
     public Student editStudent(Long id,Student student) {
         if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException();
@@ -45,26 +40,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Collection<Student> getStudentsByAgeBetween(int min, int max) {
+        return studentRepository.findStudentByAgeBetween(min,max);
+    }
+
+    @Override
     public void removeStudent(Long id) {
         if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException();
         }
         studentRepository.deleteById(id);
-    }
-
-    @Override
-    public Collection<Student> findStudentName(String name) {
-        return studentRepository.findStudentsByName(name);
-    }
-
-    @Override
-    public Collection<Student> findByNamePart(String name) {
-        return studentRepository.findStudentsByNameContains(name);
-    }
-
-    @Override
-    public Collection<Student> findStudentByAgeBetween(int age1, int age2) {
-        return studentRepository.findStudentsByAgeBetween(age1,age2);
     }
 
 }
