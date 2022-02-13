@@ -8,6 +8,6 @@ public interface FacultyService {
     Faculty createFaculty(Faculty faculty);
     Faculty findFaculty(Long id);
     Faculty editFaculty(Long id, Faculty faculty);
-    Faculty removeFaculty(Long id);
+    void removeFaculty(Long id);
     Collection<Faculty> getFacultiesByColor(String color);
 }

@@ -3,52 +3,50 @@ package ru.hogwarts.school.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepository;
+
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final Map<Long, Student> studentMap = new HashMap<>();
+
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public Student createStudent(Student student) {
-        studentMap.put(student.getId(), student);
-        return student;
+        return studentRepository.save(student);
     }
 
     @Override
     public Student findStudent(Long id) {
-        if (!studentMap.containsKey(id)) {
-            throw new StudentNotFoundException();
-        }
-        return studentMap.get(id);
+        return studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
 
     }
 
     @Override
     public Student editStudent(Long id,Student student) {
-        if (!studentMap.containsKey(id)) {
+        if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException();
         }
-        studentMap.put(id, student);
-        return student;
+        return studentRepository.save(student);
     }
 
     @Override
-    public Collection<Student> getStudentsByAge(Long age) {
-        return studentMap.values().stream()
-                .filter(s->s.getAge()==age)
-                .collect(Collectors.toList());
+    public Collection<Student> getStudentsByAge(int age) {
+        return studentRepository.findStudentByAge(age);
     }
 
     @Override
-    public Student removeStudent(Long id) {
-        if (!studentMap.containsKey(id)) {
+    public void removeStudent(Long id) {
+        if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException();
         }
-        return studentMap.remove(id);
+        studentRepository.deleteById(id);
     }
 
 

@@ -1,31 +1,32 @@
 package ru.hogwarts.school.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Student {
-    private final Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
     private String name;
     private int age;
-    private static Long counter=-1L;
 
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.id=++counter;
+    public Student() {
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && age == student.age && Objects.equals(name, student.name);
+        return id == student.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(id);
     }
 
     public Long getId() {

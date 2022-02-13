@@ -3,52 +3,48 @@ package ru.hogwarts.school.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.StudentNotFoundException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService{
-    private final Map<Long, Faculty> facultyMap = new HashMap<>();
+    private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     @Override
     public Faculty createFaculty(Faculty faculty) {
-        facultyMap.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     @Override
     public Faculty findFaculty(Long id) {
-        if (!facultyMap.containsKey(id)) {
-            throw new StudentNotFoundException();
-        }
-        return facultyMap.get(id);
+        return facultyRepository.findById(id).orElseThrow(StudentNotFoundException::new);
     }
 
     @Override
     public Faculty editFaculty(Long id, Faculty faculty) {
-        if (!facultyMap.containsKey(id)) {
+        if (!facultyRepository.existsById(id)) {
             throw new StudentNotFoundException();
         }
-        facultyMap.put(id, faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     @Override
-    public Faculty removeFaculty(Long id) {
-        if (!facultyMap.containsKey(id)) {
+    public void removeFaculty(Long id) {
+        if (!facultyRepository.existsById(id)) {
             throw new StudentNotFoundException();
         }
-        return facultyMap.remove(id);
+        facultyRepository.deleteById(id);
     }
 
     @Override
     public Collection<Faculty> getFacultiesByColor(String color) {
-        return facultyMap.values().stream()
-                .filter(f-> Objects.equals(f.getColor(), color))
-                .collect(Collectors.toList());
+        return facultyRepository.findFacultiesByColor(color);
     }
 }
