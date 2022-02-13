@@ -16,7 +16,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping()
+    @GetMapping
     public Student getStudent(@RequestParam Long id) {
         return studentService.findStudent(id);
     }
