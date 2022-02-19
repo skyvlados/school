@@ -16,8 +16,8 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping
-    public Faculty getFaculty(@RequestParam Long id) {
+    @GetMapping("{id}")
+    public Faculty getFaculty(@PathVariable Long id) {
         return facultyService.findFaculty(id);
     }
 
@@ -37,9 +37,14 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{color}")
+    @GetMapping("/color/{color}")
     public Collection<Faculty> showFacultyByColor(@PathVariable String color) {
         return facultyService.getFacultiesByColor(color);
+    }
+
+    @GetMapping()
+    public Collection<Faculty> showFacultyByColorOrName(@RequestParam(required = false) String color, @RequestParam(required = false) String name) {
+        return facultyService.getFacultiesByColorOrName(color, name);
     }
 
 }

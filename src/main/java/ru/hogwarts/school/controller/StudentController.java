@@ -16,8 +16,8 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
-    public Student getStudent(@RequestParam Long id) {
+    @GetMapping("{id}")
+    public Student getStudent(@PathVariable Long id) {
         return studentService.findStudent(id);
     }
 
@@ -37,13 +37,14 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{age}")
+    @GetMapping("/age/{age}")
     public Collection<Student> showStudentsByAge(@PathVariable int age) {
         return studentService.getStudentsByAge(age);
     }
 
-    @GetMapping("{min},{max}")
-    public Collection<Student> showStudentsByAgeBetween(@PathVariable int min,@PathVariable int max) {
-        return studentService.getStudentsByAgeBetween(min,max);
+    @GetMapping(params = {"min", "max"})
+    public Collection<Student> showStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return studentService.getStudentsByAgeBetween(min, max);
     }
+
 }
