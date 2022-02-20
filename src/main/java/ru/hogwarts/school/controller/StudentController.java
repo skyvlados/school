@@ -42,9 +42,13 @@ public class StudentController {
         return studentService.getStudentsByAge(age);
     }
 
-    @GetMapping(params = {"min", "max"})
-    public Collection<Student> showStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
+    @GetMapping("minMaxStudents/{min},{max}")
+    public Collection<Student> showStudentsByAgeBetween(@PathVariable int min, @PathVariable int max) {
         return studentService.getStudentsByAgeBetween(min, max);
     }
 
+    @GetMapping("allStudent/{allStudent}")
+    public Collection<Student> showAllStudent() {
+        return studentService.getAllStudent();
+    }
 }
