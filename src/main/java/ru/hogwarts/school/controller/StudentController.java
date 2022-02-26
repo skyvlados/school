@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public Student getStudent(@PathVariable Long id) {
+    public Student findStudent(@PathVariable Long id) {
         return studentService.findStudent(id);
     }
 
@@ -52,13 +52,13 @@ public class StudentController {
     }
 
     @GetMapping("/age/{age}")
-    public Collection<Student> showStudentsByAge(@PathVariable int age) {
-        return studentService.getStudentsByAge(age);
+    public Collection<Student> findStudentsByAge(@PathVariable int age) {
+        return studentService.findStudentsByAge(age);
     }
 
     @GetMapping("minMaxStudents/{min},{max}")
-    public Collection<Student> showStudentsByAgeBetween(@PathVariable int min, @PathVariable int max) {
-        return studentService.getStudentsByAgeBetween(min, max);
+    public Collection<Student> findStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return studentService.findStudentsByAgeBetween(min, max);
     }
 
     @GetMapping("allStudent/{allStudent}")

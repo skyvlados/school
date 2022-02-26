@@ -42,18 +42,19 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public Collection<Faculty> getFacultiesByColor(String color) {
+    public Collection<Faculty> findFacultiesByColor(String color) {
         return facultyRepository.findFacultiesByColorIsIgnoreCase(color);
     }
 
     @Override
-    public Collection<Faculty> getFacultiesByColorOrName(String color, String name) {
+    public Collection<Faculty> findFacultiesByColorOrName(String color, String name) {
         if (color == null && name == null) {
             throw new StudentNotFoundException();
-        } else if(color != null){
+        }
+        if(color != null){
         return facultyRepository.findFacultiesByColorIsIgnoreCase(color);
         }
-        else if(name != null){
+        if(name != null){
             return facultyRepository.findFacultiesByNameIsIgnoreCase(name);
         }
         return facultyRepository.findFacultiesByColorOrName(color,name);
