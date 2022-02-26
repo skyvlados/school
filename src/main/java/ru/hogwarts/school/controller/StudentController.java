@@ -1,22 +1,10 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 
 @RestController
@@ -54,12 +42,12 @@ public class StudentController {
         return studentService.findStudentsByAge(age);
     }
 
-    @GetMapping("minMaxStudents/{min},{max}")
+    @GetMapping(params = {"min", "max"})
     public Collection<Student> findStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return studentService.findStudentsByAgeBetween(min, max);
     }
 
-    @GetMapping("allStudent/{allStudent}")
+    @GetMapping("all")
     public Collection<Student> findAllStudent() {
         return studentService.findAllStudent();
     }

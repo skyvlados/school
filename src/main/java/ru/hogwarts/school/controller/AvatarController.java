@@ -26,31 +26,32 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
-    @PostMapping(value = "{studentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
-        avatarService.uploadAvatar(studentId, avatar);
+    @PostMapping(value = "{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestBody MultipartFile avatar) throws IOException {
+        avatarService.uploadAvatar(id, avatar);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{student_Id}/avatar-from-db")
-    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long student_Id) {
-        Avatar avatar = avatarService.findAvatar(student_Id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getData().length);
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+    @GetMapping("/{id}/avatar-from-db")
+    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
+        Avatar avatar = avatarService.findAvatar(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentLength(avatar.getData().length)
+                .contentType(MediaType.parseMediaType(avatar.getMediaType()))
+                .body(avatar.getData());
     }
 
-    @GetMapping("/{student_Id}/avatar-from-file")
-    public void downloadAvatar(@PathVariable Long student_Id, HttpServletResponse response) throws IOException{
-        Avatar avatar = avatarService.findAvatar(student_Id);
+    @GetMapping("/{id}/avatar-from-file")
+    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response){
+        Avatar avatar = avatarService.findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
-        try(InputStream is = Files.newInputStream(path);
-            OutputStream os = response.getOutputStream()) {
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream()) {
             response.setStatus(200);
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
+        } catch (IOException e) {
         }
     }
 }
