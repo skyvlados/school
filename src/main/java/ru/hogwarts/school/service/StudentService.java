@@ -7,6 +7,7 @@ public interface StudentService {
     Student createStudent(Student student);
     void removeStudent(Long id);
     Student findStudent(Long id);
-    Student editStudent(Long id,Student student);
-    Collection<Student> getStudentsByAge(int age);
+    Student editStudent(Long id, Student student);
+    Collection<Student> findStudentsByAge(int age);
+    Collection<Student> findStudentsByAgeBetween(int min, int max);
 }

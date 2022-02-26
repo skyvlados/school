@@ -4,9 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
-
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -37,8 +35,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentsByAge(int age) {
+    public Collection<Student> findStudentsByAge(int age) {
         return studentRepository.findStudentByAge(age);
+    }
+
+    @Override
+    public Collection<Student> findStudentsByAgeBetween(int min, int max) {
+        return studentRepository.findStudentByAgeBetween(min,max);
     }
 
     @Override
@@ -48,7 +51,5 @@ public class StudentServiceImpl implements StudentService {
         }
         studentRepository.deleteById(id);
     }
-
-
 
 }
