@@ -23,11 +23,9 @@ import java.util.Collection;
 @RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
-    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService, AvatarService avatarService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        this.avatarService = avatarService;
     }
 
     @GetMapping("{id}")
@@ -62,35 +60,7 @@ public class StudentController {
     }
 
     @GetMapping("allStudent/{allStudent}")
-    public Collection<Student> showAllStudent() {
-        return studentService.getAllStudent();
-    }
-
-    @PostMapping(value = "{studentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
-        avatarService.uploadAvatar(studentId, avatar);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{student_Id}/avatar-from-db")
-    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long student_Id) {
-        Avatar avatar = avatarService.findAvatar(student_Id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getData().length);
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
-    }
-
-    @GetMapping("/{student_Id}/avatar-from-file")
-    public void downloadAvatar(@PathVariable Long student_Id, HttpServletResponse response) throws IOException{
-        Avatar avatar = avatarService.findAvatar(student_Id);
-        Path path = Path.of(avatar.getFilePath());
-        try(InputStream is = Files.newInputStream(path);
-            OutputStream os = response.getOutputStream()) {
-            response.setStatus(200);
-            response.setContentType(avatar.getMediaType());
-            response.setContentLength((int) avatar.getFileSize());
-            is.transferTo(os);
-        }
+    public Collection<Student> findAllStudent() {
+        return studentService.findAllStudent();
     }
 }
