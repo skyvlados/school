@@ -17,7 +17,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public Faculty getFaculty(@PathVariable Long id) {
+    public Faculty findFaculty(@PathVariable Long id) {
         return facultyService.findFaculty(id);
     }
 
@@ -38,13 +38,13 @@ public class FacultyController {
     }
 
     @GetMapping("/color/{color}")
-    public Collection<Faculty> showFacultyByColor(@PathVariable String color) {
-        return facultyService.getFacultiesByColor(color);
+    public Collection<Faculty> findFacultyByColor(@PathVariable String color) {
+        return facultyService.findFacultiesByColor(color);
     }
 
-    @GetMapping()
-    public Collection<Faculty> showFacultyByColorOrName(@RequestParam(required = false) String color, @RequestParam(required = false) String name) {
-        return facultyService.getFacultiesByColorOrName(color, name);
+    @GetMapping
+    public Collection<Faculty> findFacultyByColorOrName(@RequestParam(required = false) String color, @RequestParam(required = false) String name) {
+        return facultyService.findFacultiesByColorOrName(color, name);
     }
 
 }

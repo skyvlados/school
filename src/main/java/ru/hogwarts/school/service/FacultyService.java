@@ -9,7 +9,7 @@ public interface FacultyService {
     Faculty findFaculty(Long id);
     Faculty editFaculty(Long id, Faculty faculty);
     void removeFaculty(Long id);
-    Collection<Faculty> getFacultiesByColor(String color);
+    Collection<Faculty> findFacultiesByColor(String color);
 
-    Collection<Faculty> getFacultiesByColorOrName(String color, String name);
+    Collection<Faculty> findFacultiesByColorOrName(String color, String name);
 }
