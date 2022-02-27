@@ -56,7 +56,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findAvatarByStudentId(studentId).orElseThrow(StudentNotFoundException::new);
+        return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
 
     private String getExtensions(String fileName) {
