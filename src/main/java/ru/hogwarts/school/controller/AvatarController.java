@@ -1,6 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/students")
@@ -42,7 +44,7 @@ public class AvatarController {
     }
 
     @GetMapping("/{id}/avatar-from-file")
-    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response){
+    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) {
         Avatar avatar = avatarService.findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
         try (InputStream is = Files.newInputStream(path);
@@ -54,4 +56,5 @@ public class AvatarController {
         } catch (IOException e) {
         }
     }
+
 }
