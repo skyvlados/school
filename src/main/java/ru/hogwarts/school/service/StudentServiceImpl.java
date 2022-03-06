@@ -52,9 +52,4 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
-    @Override
-    public Collection<Student> findAllStudent() {
-        return studentRepository.findAll();
-    }
-
 }
