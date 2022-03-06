@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
@@ -11,9 +12,11 @@ import java.util.Collection;
 @RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
+    private final StudentRepository studentRepository;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, StudentRepository studentRepository) {
         this.studentService = studentService;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping("{id}")
@@ -47,4 +50,8 @@ public class StudentController {
         return studentService.findStudentsByAgeBetween(min, max);
     }
 
+    @GetMapping("all")
+    public Collection<Student> findAllStudent() {
+        return studentRepository.findAll();
+    }
 }
