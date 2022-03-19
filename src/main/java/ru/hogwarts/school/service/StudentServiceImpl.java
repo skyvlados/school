@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer findAvgAgeStudent() {
+    public Float findAvgAgeStudent() {
         return studentRepository.findAvgAgeStudent();
     }
 

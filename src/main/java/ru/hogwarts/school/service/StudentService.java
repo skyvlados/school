@@ -11,10 +11,7 @@ public interface StudentService {
     Collection<Student> findStudentsByAge(int age);
     Collection<Student> findStudentsByAgeBetween(int min, int max);
     Collection<Student> findAllStudent();
-
     Integer findCountStudent();
-
-    Integer findAvgAgeStudent();
-
+    Float findAvgAgeStudent();
     Collection<String> findLastFiveStudent();
 }
