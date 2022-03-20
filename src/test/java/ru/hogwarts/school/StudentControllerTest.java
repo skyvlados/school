@@ -8,6 +8,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepository;
+import ru.hogwarts.school.service.StudentService;
+import ru.hogwarts.school.service.StudentServiceImpl;
+
+import java.util.Collection;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {
@@ -22,6 +27,12 @@ public class StudentControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private StudentService studentService;
+
     @Test
     public void contextLoad() throws Exception {
         Assertions.assertThat(studentController).isNotNull();
@@ -29,34 +40,49 @@ public class StudentControllerTest {
 
     @Test
     public void testPostStudent() throws Exception {
-        //Long idStudent=1L;
+        Long studentLastId=studentRepository.findStudentLast();
         String nameStudent="testStudent";
         int ageStudent=20;
-        Student student = new Student();
-        student.setName(nameStudent);
-        student.setAge(ageStudent);
+        Student testStudent = new Student();
+        testStudent.setId(studentLastId+1);
+        testStudent.setName(nameStudent);
+        testStudent.setAge(ageStudent);
 
         Assertions
-                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/students", student, Student.class))
-                .isNotNull();
+                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/students", testStudent,
+                        Student.class))
+                .isEqualTo(testStudent);
 
     }
 
     @Test
     public void testGetAllStudent() throws Exception {
+        Collection<Student> testStudent= studentService.getAllStudent();
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/students", Student.class))
-                .isNotNull();
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/students/allStudent",
+                                Collection.class))
+                .isEqualTo(testStudent);
     }
 
     @Test
     public void testGetStudent() throws Exception {
-        Long idStudent=1L;
-
+        Long studentLastId=studentRepository.findStudentLast();
+        Student testStudent= studentService.findStudent(studentLastId);
         Assertions
-                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/students/"+idStudent,idStudent, Student.class))
-                .isNotNull();
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/students/"+studentLastId,
+                        Student.class))
+                .isEqualTo(testStudent);
     }
+
+//    @Test
+//    public void testDeleteStudent() throws Exception {
+//        Long deleteStudentId=studentRepository.findStudentLast();
+//        Student testStudent= studentService.findStudent(deleteStudentId);
+//        Assertions
+//                .assertThat(this.restTemplate.delete("http://localhost:" + port + "/students/"+deleteStudentId,
+//                        testStudent,Student.class))
+//                .assertNull(testStudent);
+//    }
 
 
 

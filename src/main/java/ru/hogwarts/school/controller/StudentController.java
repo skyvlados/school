@@ -61,7 +61,7 @@ public class StudentController {
         return studentService.getStudentsByAgeBetween(min, max);
     }
 
-    @GetMapping("allStudent/{allStudent}")
+    @GetMapping("allStudent")
     public Collection<Student> showAllStudent() {
         return studentService.getAllStudent();
     }
