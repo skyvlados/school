@@ -61,7 +61,8 @@ public class StudentControllerTest {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/students/allStudent",
                                 Collection.class))
-                .isEqualTo(testStudent);
+                .isEqualTo(testStudent)
+                .isNotNull();
     }
 
     @Test
@@ -73,17 +74,5 @@ public class StudentControllerTest {
                         Student.class))
                 .isEqualTo(testStudent);
     }
-
-//    @Test
-//    public void testDeleteStudent() throws Exception {
-//        Long deleteStudentId=studentRepository.findStudentLast();
-//        Student testStudent= studentService.findStudent(deleteStudentId);
-//        Assertions
-//                .assertThat(this.restTemplate.delete("http://localhost:" + port + "/students/"+deleteStudentId,
-//                        testStudent,Student.class))
-//                .assertNull(testStudent);
-//    }
-
-
 
 }
