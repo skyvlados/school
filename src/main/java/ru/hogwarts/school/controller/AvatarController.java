@@ -57,8 +57,6 @@ public class AvatarController {
 
     @GetMapping("avatars")
     public Collection<Avatar> findAllAvatar(@RequestParam int pageNumber,@RequestParam int pageSize) {
-
         return avatarService.findAllAvatars(pageNumber,pageSize);
     }
-
 }

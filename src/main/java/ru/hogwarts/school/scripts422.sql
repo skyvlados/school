@@ -1,9 +1,9 @@
-CREATE TABLE persons
+CREATE TABLE person
 (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    age SERIAL,
-    isLicense BOOLEAN,
+    age INTEGER,
+    licensed BOOLEAN,
     cars_id SERIAL REFERENCES cars (id)
 );
 CREATE TABLE cars
@@ -11,6 +11,5 @@ CREATE TABLE cars
     id SERIAL PRIMARY KEY,
     brand TEXT,
     model TEXT,
-    prise SERIAL
+    price INTEGER
 );
-
