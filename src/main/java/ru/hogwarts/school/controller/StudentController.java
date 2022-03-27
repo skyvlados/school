@@ -54,4 +54,18 @@ public class StudentController {
     public Collection<Student> findAllStudent() {
         return studentRepository.findAll();
     }
+
+    @GetMapping("count")
+    public Integer findCountStudent() {
+        return studentService.findCountStudent();
+    }
+
+    @GetMapping("avg")
+    public Float findAvgAgeStudent() {
+        return studentService.findAvgAgeStudent();
+    }
+    @GetMapping("5student")
+    public Collection<String> findLastFiveStudent() {
+        return studentService.findLastFiveStudent();
+    }
 }

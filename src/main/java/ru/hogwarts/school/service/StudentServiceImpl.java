@@ -52,4 +52,23 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
+    @Override
+    public Collection<Student> findAllStudent() {
+        return studentRepository.findAll();
+    }
+
+    @Override
+    public Integer findCountStudent() {
+        return studentRepository.findCountStudent();
+    }
+
+    @Override
+    public Float findAvgAgeStudent() {
+        return studentRepository.findAvgAgeStudent();
+    }
+
+    @Override
+    public Collection<String> findLastFiveStudent() {
+        return studentRepository.findLastFiveStudent();
+    }
 }

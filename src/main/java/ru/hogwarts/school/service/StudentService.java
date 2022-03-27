@@ -10,4 +10,8 @@ public interface StudentService {
     Student editStudent(Long id, Student student);
     Collection<Student> findStudentsByAge(int age);
     Collection<Student> findStudentsByAgeBetween(int min, int max);
+    Collection<Student> findAllStudent();
+    Integer findCountStudent();
+    Float findAvgAgeStudent();
+    Collection<String> findLastFiveStudent();
 }
