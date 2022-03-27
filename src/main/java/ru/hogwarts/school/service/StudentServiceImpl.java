@@ -71,5 +71,4 @@ public class StudentServiceImpl implements StudentService {
     public Collection<String> findLastFiveStudent() {
         return studentRepository.findLastFiveStudent();
     }
-
 }
