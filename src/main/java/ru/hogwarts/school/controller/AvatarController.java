@@ -59,5 +59,4 @@ public class AvatarController {
     public Collection<Avatar> findAllAvatar(@RequestParam int pageNumber,@RequestParam int pageSize) {
         return avatarService.findAllAvatars(pageNumber,pageSize);
     }
-
 }
