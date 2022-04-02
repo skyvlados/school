@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.FacultyService;
+import ru.hogwarts.school.service.StudentService;
 
 import java.util.Optional;
 
@@ -29,13 +31,19 @@ public class FacultyControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private FacultyRepository facultyRepository;
-
-    @SpyBean
     private FacultyService facultyService;
 
-    @InjectMocks
-    private FacultyController facultyController;
+    @MockBean
+    private StudentService studentService;
+
+    @MockBean
+    private AvatarService avatarService;
+
+//    @InjectMocks
+//    private FacultyService facultyService;
+//
+//    @InjectMocks
+//    private FacultyController facultyController;
 
     @Test
     public void saveFacultyTest() throws Exception {
@@ -52,8 +60,8 @@ public class FacultyControllerTest {
         faculty.setName(name);
         faculty.setColor(color);
 
-        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
-        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+        when(facultyService.createFaculty(any(Faculty.class))).thenReturn(faculty);
+//        when(facultyService.findFaculty(any(Long.class))).thenReturn(Optional.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculties") //send
@@ -63,6 +71,6 @@ public class FacultyControllerTest {
                 .andExpect(status().isOk()) //receive
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.color").value(name));
+                .andExpect(jsonPath("$.color").value(color));
     }
 }
